@@ -1,0 +1,25 @@
+{
+    "name": "ugo-fieldset",
+    "version": "0.0.1",
+    "authors": [
+        "Florian Roy"
+    ],
+    "description": "Polymer Element helper to resume form contents",
+    "main": "element/*",
+    "ignore": [
+        "**/.*",
+        "node_modules",
+        "bower_components",
+        "test",
+        "tests"
+    ],
+    "keywords": ["Polymer", "web-components", "resume", "html", "form"],
+    "dependencies": {
+        "polymer": "Polymer/polymer#master",
+        "ugo-resumer": "*",
+        "core-collapse": "Polymer/core-collapse"
+    },
+    "devDependencies": {
+        "web-component-tester": "*"
+    }
+}

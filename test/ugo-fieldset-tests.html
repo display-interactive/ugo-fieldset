@@ -1,0 +1,28 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+    <title>resumer-element</title>
+
+    <!-- Import dependencies -->
+    <script src="../../webcomponentsjs/webcomponents.min.js"></script>
+    <script src="../../web-component-tester/browser.js"></script>
+
+    <link rel="import" href="../../polymer/polymer.html">
+</head>
+
+<body>
+
+<script>
+    suite('<ugo-fieldset>', function() {
+        var el = document.getElementById('typical');
+
+        test('exists', function() {
+            assert.isNotNull(el);
+        });
+    });
+</script>
+
+</body>
+</html>

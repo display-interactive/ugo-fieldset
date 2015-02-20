@@ -1,0 +1,94 @@
+:host {
+    font-size: 14px;
+}
+
+/** Fieldset **/
+.ugo-fieldset {
+    position:relative;
+    min-width: 0;
+    padding: 0;
+    margin: 0;
+    border: 0;
+}
+
+.ugo-fieldset-border {
+    position: absolute;
+    z-index: -1;
+    top: -9px;
+
+    width: 100%;
+    height: 0;
+
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border: 0;
+    border-top: 1px solid #B7B7B7;
+
+    -webkit-box-sizing: content-box;
+    -moz-box-sizing: content-box;
+    box-sizing: content-box;
+}
+
+.ugo-fieldset > legend {
+    display: inline-block;
+
+    width: auto;
+    padding: 0 15px 0 0;
+    margin: 0;
+    border: 0;
+
+    font-size: 15px;
+    font-family: Arial, Verdana, sans-serif;
+    color: #555;
+    text-transform: uppercase;
+    background-color: #fff;
+}
+
+.ugo-fieldset > legend:before {
+    display: block;
+    position: absolute;
+    border-top: 1px solid #ddd;
+    width: 100%;
+}
+
+.ugo-fieldset > legend > span {
+    display: inline-block;
+}
+
+.ugo-fieldset > legend > span > span {
+    text-transform: none;
+}
+
+.ugo-fieldset-btn {
+    display: inline-block;
+    margin-bottom: 0;
+
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    -ms-touch-action: manipulation;
+    touch-action: manipulation;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background-image: none;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+
+    outline: none;
+    width: 24px;
+    height: 24px;
+    padding: 1px 5px;
+    margin-right: 15px;
+    background-color: #aaa;
+    background-image: -webkit-linear-gradient(top, #fafafa, #f2f2f2);
+    background-image: linear-gradient(to bottom, #fafafa, #f2f2f2);
+    font-weight: bold;
+    color: #00468C;
+    font-size: 16px;
+    line-height: 1;
+}
+
+

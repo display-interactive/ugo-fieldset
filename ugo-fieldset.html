@@ -1,0 +1,124 @@
+<link rel="import" href="../polymer/polymer.html">
+
+<polymer-element name="ugo-fieldset" on-submit="{{onSubmit}}" attributes="legend opened">
+    <template>
+        <link rel="stylesheet" href="ugo-fieldset.css">
+
+        <fieldset  class="ugo-fieldset">
+            <hr class="ugo-fieldset-border">
+            <legend>
+                <button id="ugoFieldsetButton" type="button" class="ugo-fieldset-btn" on-tap="{{onTap}}">
+                    <span aria-hidden="true">{{opened ? '-' : '+'}}</span>
+                </button>
+                <span aria-label="true">
+                    {{legend}}
+                </span>
+            </legend>
+
+            <content></content>
+        </fieldset>
+    </template>
+    <script>
+        Polymer('ugo-fieldset', {
+            /**
+             * Open status for core-collapse
+             */
+            opened: false,
+
+            /**
+             * Fieldset legend (title)
+             */
+            legend: '',
+
+            /**
+             * @type {HTMLElement|null}
+             */
+            collapse: null,
+
+            /**
+             * @type {HTMLElement|null}
+             */
+            resumer: null,
+
+            /**
+             * @type {HTMLFormElement|null}
+             */
+            form: null,
+
+            /**
+             * Constructor
+             */
+            ready: function() {
+                this.collapse = this.querySelector('core-collapse');
+                this.collapse.opened = this.opened;
+                this.resumer = this.querySelector('ugo-resumer');
+                this.form = this.getParentForm();
+
+                if (!this.opened) this.resumer.classList.add('opened');
+            },
+
+            /**
+             * When the DOM is ready
+             */
+            domReady: function() {
+                this.collapse.addEventListener('core-resize', this.onCoreResize.bind(this));
+                this.form.addEventListener('submit', this.onFormSubmit.bind(this));
+            },
+
+            /**
+             * Remove listener when removing item
+             */
+            detached: function() {
+                this.collapse.removeEventListener('core-resize');
+            },
+
+            /**
+             * onTap event switch opened
+             */
+            onTap: function() {
+                this.opened = !this.opened;
+                this.collapse.opened = this.opened;
+                if (this.collapse.opened) {
+                    this.resumer.classList.remove('opened');
+                    this.resumer.opened = false;
+                }
+            },
+
+            /**
+             * Get parent form
+             *
+             * @return {HTMLFormElement}
+             */
+            getParentForm: function () {
+                var p = this.parentNode,
+                    o;
+
+                while (p !== null) {
+                    o = p;
+                    if (o.tagName === 'FORM') {
+                        return o;
+                    }
+
+                    p = o.parentNode;
+                }
+
+                return null;
+            },
+
+            onFormSubmit: function(event) {
+                event.preventDefault();
+                console.log('sub');
+            },
+
+            /**
+             * CoreResize event
+             */
+            onCoreResize: function() {
+                if (!this.collapse.opened) {
+                    this.resumer.classList.add('opened');
+                    this.resumer.opened = true;
+                }
+            }
+        });
+    </script>
+</polymer-element>

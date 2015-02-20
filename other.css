@@ -1,0 +1,18 @@
+.ugo-fieldset-content {
+    background-color: #f1f1f1;
+    border-radius: 3px;
+    margin: 10px 0;
+}
+
+.ugo-fieldset-content .core-collapse-container {
+    padding: 20px 30px;
+
+}
+
+.ugo-fieldset-resume.opened {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: #fff;
+    padding: 0 10px;
+}
