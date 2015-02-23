@@ -4,7 +4,7 @@
 <head>
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
     <meta charset="utf-8">
-    <title>Core resumer demo</title>
+    <title>UGO Fieldset demo</title>
     <script src="../webcomponentsjs/webcomponents.js"></script>
     <link rel="import" href="ugo-fieldset.html">
     <link rel="import" href="../ugo-resumer/ugo-resumer.html">
@@ -23,6 +23,14 @@
             width: 690px;
             margin: 305px auto 1000px;
         }
+
+        .has-error input, .has-error select {
+            border: 1px solid red;
+        }
+
+        .has-success input, .has-success select {
+            border: 1px solid green;
+        }
     </style>
 </head>
 
@@ -31,21 +39,21 @@
 <div id="container">
     <h1>Demo with ugo-resumer core-collapse</h1>
 
-    <form>
-    <ugo-fieldset legend="Paramètres principaux">
-        <ugo-resumer id="ugoFieldsetResumer" opened="opened" class="ugo-fieldset-resume" attribute="{{attribute}}">
-            <core-collapse id="ugoFieldsetCollapse" opened="{{opened}}" allowOverflow class="ugo-fieldset-content">
+    <form novalidate>
+    <ugo-fieldset id="flds" preventSubmission opened legend="Paramètres principaux">
+        <ugo-resumer opened="opened" class="ugo-fieldset-resume" attribute="{{attribute}}">
+            <core-collapse opened="{{opened}}" allowOverflow class="ugo-fieldset-content">
                 <div class="core-collapse-container">
                     <label>L3</label>
-                    <p><input type="hidden" resumer-item value="hidden" /></p>
-                    <p><input type="text" resumer-item value="text" /></p>
-                    <p><select resumer-item>
+                    <p><input type="hidden" name="hidden" resumer-item value="hidden" /></p>
+                    <p><input type="text" name="text1" resumer-item pattern="text1" value="text" /></p>
+                    <p><select name="select" resumer-item>
                         <option value="select" selected="selected">select</option>
                     </select></p>
 
 
-                    <p><input type="text" resumer-item value="text2" /></p>
-                    <p><select resumer-item>
+                    <p><input type="text" name="text2" resumer-item required="required" value="" /></p>
+                    <p><select name="select2" resumer-item>
                         <option value="select2" selected="selected">select2</option>
                     </select></p>
                 </div>
@@ -54,6 +62,7 @@
     </ugo-fieldset>
 
         <button type="submit">send</button>
+        <button type="button" onclick="document.getElementById('flds').checkValidity();">check</button>
     </form>
 </div>
 </body>

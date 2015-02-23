@@ -1,6 +1,6 @@
 <link rel="import" href="../polymer/polymer.html">
 
-<polymer-element name="ugo-fieldset" on-submit="{{onSubmit}}" attributes="legend opened">
+<polymer-element name="ugo-fieldset" on-submit="{{onSubmit}}" attributes="legend opened preventSubmission errorClass successClass">
     <template>
         <link rel="stylesheet" href="ugo-fieldset.css">
 
@@ -22,8 +22,26 @@
         Polymer('ugo-fieldset', {
             /**
              * Open status for core-collapse
+             * @type {Boolean}
              */
             opened: false,
+
+            /**
+             * Prevent form submission
+             *
+             * @type {Boolean}
+             */
+            preventSubmission: false,
+
+            /**
+             * @type {String}
+             */
+            errorClass: 'has-error',
+
+            /**
+             * @type {String}
+             */
+            successClass: 'has-success',
 
             /**
              * Fieldset legend (title)
@@ -53,8 +71,11 @@
                 this.collapse.opened = this.opened;
                 this.resumer = this.querySelector('ugo-resumer');
                 this.form = this.getParentForm();
+                if (this.preventSubmission && this.form) {
+                    this.form.noValidate = true;
+                }
 
-                if (!this.opened) this.resumer.classList.add('opened');
+                if (!this.opened) this.resumer.classList.add('showed');
             },
 
             /**
@@ -62,7 +83,9 @@
              */
             domReady: function() {
                 this.collapse.addEventListener('core-resize', this.onCoreResize.bind(this));
-                this.form.addEventListener('submit', this.onFormSubmit.bind(this));
+                if (this.form) {
+                    this.form.addEventListener('submit', this.onFormSubmit.bind(this));
+                }
             },
 
             /**
@@ -77,10 +100,16 @@
              */
             onTap: function() {
                 this.opened = !this.opened;
+            },
+
+            /**
+             * On opened property change
+             */
+            openedChanged: function() {
                 this.collapse.opened = this.opened;
                 if (this.collapse.opened) {
-                    this.resumer.classList.remove('opened');
-                    this.resumer.opened = false;
+                    this.resumer.classList.remove('showed');
+                    this.resumer.showed = false;
                 }
             },
 
@@ -90,8 +119,7 @@
              * @return {HTMLFormElement}
              */
             getParentForm: function () {
-                var p = this.parentNode,
-                    o;
+                var p = this.parentNode, o;
 
                 while (p !== null) {
                     o = p;
@@ -105,9 +133,52 @@
                 return null;
             },
 
+            /**
+             * Form submit
+             */
             onFormSubmit: function(event) {
-                event.preventDefault();
-                console.log('sub');
+                var isValid = this.isValid();
+                if (!isValid) {
+                    this.opened = true;
+                }
+
+                if (this.preventSubmission && !isValid) {
+                    event.preventDefault();
+                }
+            },
+
+            /**
+             * Check fields validity
+             */
+            isValid: function() {
+                var validity = true,
+                        parent;
+                this.forEachInput(function(element) {
+                    if (element.getAttribute('parent-selector')) {
+                        parent = this.querySelector(element.getAttribute('parent-selector'));
+                    } else {
+                        parent = element.parentNode;
+                    }
+
+                    if (!element.validity.valid) {
+                        validity = false;
+                        parent.classList.remove(this.successClass);
+                        parent.classList.add(this.errorClass);
+                    } else {
+                        parent.classList.add(this.successClass);
+                        parent.classList.remove(this.errorClass);
+                    }
+                }.bind(this));
+
+                return validity;
+            },
+
+            /**
+             * forEach loop on every form field
+             */
+            forEachInput: function(callback) {
+                var elements = this.querySelectorAll('input, textarea, select');
+                [].forEach.call(elements, callback);
             },
 
             /**
@@ -115,8 +186,8 @@
              */
             onCoreResize: function() {
                 if (!this.collapse.opened) {
-                    this.resumer.classList.add('opened');
-                    this.resumer.opened = true;
+                    this.resumer.classList.add('showed');
+                    this.resumer.showed = true;
                 }
             }
         });

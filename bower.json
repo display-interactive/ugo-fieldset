@@ -15,7 +15,7 @@
     ],
     "keywords": ["Polymer", "web-components", "resume", "html", "form"],
     "dependencies": {
-        "polymer": "Polymer/polymer#master",
+        "polymer": "Polymer/polymer#^0.5",
         "ugo-resumer": "*",
         "core-collapse": "Polymer/core-collapse"
     },
