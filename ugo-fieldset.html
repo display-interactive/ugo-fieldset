@@ -3,7 +3,6 @@
 <polymer-element name="ugo-fieldset" on-submit="{{onSubmit}}" attributes="legend opened preventSubmission errorClass successClass">
     <template>
         <link rel="stylesheet" href="ugo-fieldset.css">
-
         <fieldset  class="ugo-fieldset">
             <hr class="ugo-fieldset-border">
             <legend>
@@ -112,6 +111,14 @@
                     this.resumer.showed = false;
                 }
             },
+
+            /**
+             * On opened property change
+             */
+            legendChanged: function() {
+                this.legend = this.legend;
+            },
+
 
             /**
              * Get parent form
