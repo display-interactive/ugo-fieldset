@@ -1,6 +1,6 @@
 {
     "name": "ugo-fieldset",
-    "version": "0.0.1",
+    "version": "0.2",
     "authors": [
         "Florian Roy"
     ],
@@ -15,9 +15,9 @@
     ],
     "keywords": ["Polymer", "web-components", "resume", "html", "form"],
     "dependencies": {
-        "polymer": "Polymer/polymer#^0.5",
+        "polymer": "Polymer/polymer#^0.8.0-rc.4",
         "ugo-resumer": "*",
-        "core-collapse": "Polymer/core-collapse"
+        "core-collapse": "Polymer/core-collapse#0.8-preview"
     },
     "devDependencies": {
         "web-component-tester": "*"

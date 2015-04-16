@@ -4,19 +4,10 @@
     padding: 0;
 }
 
-/** Fieldset **/
-.ugo-fieldset {
-    position:relative;
-    min-width: 0;
-    padding: 0;
-    margin: 0;
-    border: 0;
-}
-
 hr.ugo-fieldset-border {
     position: absolute;
     z-index: -1;
-    top: 11px; /*todo: fix bug ff*/
+    top: 11px;
 
     width: 100%;
     height: 0;
@@ -27,10 +18,21 @@ hr.ugo-fieldset-border {
     border-top: 1px solid #B7B7B7;
 }
 
-.ugo-fieldset > legend {
-    display: block;
+/** Fieldset **/
+.ugo-fieldset {
+    position:relative;
+    min-width: 0;
+    padding: 0;
+    margin: 0 0 30px;
+    border: 0;
+}
 
-    width: auto;
+.ugo-fieldset > legend {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: inline-block;
+
     padding: 0 15px 0 0;
     margin: 0;
     border: 0;
@@ -41,8 +43,6 @@ hr.ugo-fieldset-border {
     text-transform: uppercase;
     background-color: #fff;
 }
-
-
 
 .ugo-fieldset > legend > span {
     display: inline-block;
@@ -83,3 +83,5 @@ hr.ugo-fieldset-border {
     font-size: 16px;
     line-height: 1;
 }
+
+

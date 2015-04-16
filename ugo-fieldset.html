@@ -1,194 +1,215 @@
 <link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../core-collapse/core-collapse.html">
+<link rel="import" href="../ugo-resumer/ugo-resumer.html">
 
-<polymer-element name="ugo-fieldset" on-submit="{{onSubmit}}" attributes="legend opened preventSubmission errorClass successClass">
+<dom-module id="ugo-fieldset">
+    <link rel="stylesheet" href="ugo-fieldset.css">
+    <style>
+        .ugo-fieldset-content {
+            background-color: #f1f1f1;
+            border-radius: 3px;
+            margin: 30px 0 0;
+        }
+
+        .ugo-fieldset-content .core-collapse-container {
+            padding: 20px 30px;
+        }
+
+        .ugo-fieldset-resume.showed {
+            position: absolute;
+            top: 0;
+            right: 0;
+            background-color: #fff;
+            padding: 0 10px;
+        }
+    </style>
     <template>
-        <link rel="stylesheet" href="ugo-fieldset.css">
+
         <fieldset  class="ugo-fieldset">
-            <hr class="ugo-fieldset-border">
             <legend>
-                <button id="ugoFieldsetButton" type="button" class="ugo-fieldset-btn" on-tap="{{onTap}}">
-                    <span aria-hidden="true">{{opened ? '-' : '+'}}</span>
+                <button id="ugoFieldsetButton" type="button" class="ugo-fieldset-btn" on-tap="onTap">
+                    <span aria-hidden="true">{{buttonText}}</span>
                 </button>
-                <span aria-label="true">
-                    {{legend}}
-                </span>
+                <span aria-label="true">{{legend}}</span>
             </legend>
 
-            <content></content>
+            <hr class="ugo-fieldset-border">
+
+            <ugo-resumer id="fldsResumer" class="ugo-fieldset-resume">
+                <core-collapse id="fldsCollapse" opened="{{opened}}" allowOverflow class="ugo-fieldset-content">
+                    <div class="core-collapse-container">
+                        <content></content>
+                    </div>
+                </core-collapse>
+            </ugo-resumer>
         </fieldset>
     </template>
-    <script>
-        Polymer('ugo-fieldset', {
+</dom-module>
+<script>
+    Polymer({
+        is: 'ugo-fieldset',
+
+        properties: {
             /**
              * Open status for core-collapse
-             * @type {Boolean}
              */
-            opened: false,
+            opened: {
+                type: Boolean,
+                value: false,
+                observer: 'openedChanged'
+            },
 
             /**
              * Prevent form submission
-             *
-             * @type {Boolean}
              */
-            preventSubmission: false,
+            preventSubmission: {
+                type: Boolean,
+                value: false
+            },
 
-            /**
-             * @type {String}
-             */
-            errorClass: 'has-error',
+            errorClass: {
+                type: String,
+                value: 'has-error'
+            },
 
-            /**
-             * @type {String}
-             */
-            successClass: 'has-success',
+            successClass: {
+                type: String,
+                value: 'has-success'
+            },
 
             /**
              * Fieldset legend (title)
              */
-            legend: '',
+            legend: {
+                type: String,
+                notify: true
+            }
+        },
 
-            /**
-             * @type {HTMLElement|null}
-             */
-            collapse: null,
+        /**
+         * @type {HTMLFormElement|null}
+         */
+        form: null,
 
-            /**
-             * @type {HTMLElement|null}
-             */
-            resumer: null,
+        /**
+         * @type {String}
+         */
+        buttonText: null,
 
-            /**
-             * @type {HTMLFormElement|null}
-             */
-            form: null,
+        /**
+         * Constructor
+         */
+        ready: function() {
+            this.setResumerData();
+            this.$.fldsCollapse.addEventListener('transitionend', this.onCollapseTransitionEnd.bind(this));
 
-            /**
-             * Constructor
-             */
-            ready: function() {
-                this.collapse = this.querySelector('core-collapse');
-                this.collapse.opened = this.opened;
-                this.resumer = this.querySelector('ugo-resumer');
-                this.form = this.getParentForm();
-                if (this.preventSubmission && this.form) {
+            this.form = this.getParentForm();
+            if (this.form) {
+                if (this.preventSubmission) {
                     this.form.noValidate = true;
                 }
-
-                if (!this.opened) this.resumer.classList.add('showed');
-            },
-
-            /**
-             * When the DOM is ready
-             */
-            domReady: function() {
-                this.collapse.addEventListener('core-resize', this.onCoreResize.bind(this));
-                if (this.form) {
-                    this.form.addEventListener('submit', this.onFormSubmit.bind(this));
-                }
-            },
-
-            /**
-             * Remove listener when removing item
-             */
-            detached: function() {
-                this.collapse.removeEventListener('core-resize');
-            },
-
-            /**
-             * onTap event switch opened
-             */
-            onTap: function() {
-                this.opened = !this.opened;
-            },
-
-            /**
-             * On opened property change
-             */
-            openedChanged: function() {
-                this.collapse.opened = this.opened;
-                if (this.collapse.opened) {
-                    this.resumer.classList.remove('showed');
-                    this.resumer.showed = false;
-                }
-            },
-
-            /**
-             * Get parent form
-             *
-             * @return {HTMLFormElement}
-             */
-            getParentForm: function () {
-                var p = this.parentNode, o;
-
-                while (p !== null) {
-                    o = p;
-                    if (o.tagName === 'FORM') {
-                        return o;
-                    }
-
-                    p = o.parentNode;
-                }
-
-                return null;
-            },
-
-            /**
-             * Form submit
-             */
-            onFormSubmit: function(event) {
-                var isValid = this.isValid();
-                if (!isValid) {
-                    this.opened = true;
-                }
-
-                if (this.preventSubmission && !isValid) {
-                    event.preventDefault();
-                }
-            },
-
-            /**
-             * Check fields validity
-             */
-            isValid: function() {
-                var validity = true,
-                        parent;
-                this.forEachInput(function(element) {
-                    if (element.getAttribute('parent-selector')) {
-                        parent = this.querySelector(element.getAttribute('parent-selector'));
-                    } else {
-                        parent = element.parentNode;
-                    }
-
-                    if (!element.validity.valid) {
-                        validity = false;
-                        parent.classList.remove(this.successClass);
-                        parent.classList.add(this.errorClass);
-                    } else {
-                        parent.classList.add(this.successClass);
-                        parent.classList.remove(this.errorClass);
-                    }
-                }.bind(this));
-
-                return validity;
-            },
-
-            /**
-             * forEach loop on every form field
-             */
-            forEachInput: function(callback) {
-                var elements = this.querySelectorAll('input, textarea, select');
-                [].forEach.call(elements, callback);
-            },
-
-            /**
-             * CoreResize event
-             */
-            onCoreResize: function() {
-                if (!this.collapse.opened) {
-                    this.resumer.classList.add('showed');
-                    this.resumer.showed = true;
-                }
+                this.form.addEventListener('submit', this.onFormSubmit.bind(this));
             }
-        });
-    </script>
-</polymer-element>
+        },
+
+        /**
+         * Remove listener when removing item
+         */
+        detached: function() {
+            this.collapse.removeEventListener('core-resize');
+        },
+
+        /**
+         * onTap event switch opened
+         */
+        onTap: function() {
+            this.opened = !this.opened;
+        },
+
+        /**
+         * On opened property change
+         */
+        openedChanged: function() {
+            if (this.opened) this.setResumerData();
+            this.buttonText = this.opened ? '-' : '+';
+        },
+
+        /**
+         * Get parent form
+         *
+         * @return {HTMLFormElement}
+         */
+        getParentForm: function () {
+            var p = this.parentNode, o;
+
+            while (p !== null) {
+                o = p;
+                if (o.tagName === 'FORM') {
+                    return o;
+                }
+
+                p = o.parentNode;
+            }
+
+            return null;
+        },
+
+        /**
+         * Form submit
+         */
+        onFormSubmit: function(event) {
+            var isValid = this.isValid();
+            if (!isValid) {
+                this.opened = true;
+            }
+
+            if (this.preventSubmission && !isValid) {
+                event.preventDefault();
+            }
+        },
+
+        /**
+         * Check fields validity
+         */
+        isValid: function() {
+            var validity = true,
+                parent,
+                elements = Polymer.dom(this).querySelectorAll('input, textarea, select')
+            ;
+
+            [].forEach.call(elements, function(element) {
+                if (element.getAttribute('parent-selector')) {
+                    parent = this.querySelector(element.getAttribute('parent-selector'));
+                } else {
+                    parent = element.parentNode;
+                }
+
+                if (!element.validity.valid) {
+                    validity = false;
+                    parent.classList.remove(this.successClass);
+                    parent.classList.add(this.errorClass);
+                } else {
+                    parent.classList.add(this.successClass);
+                    parent.classList.remove(this.errorClass);
+                }
+            }.bind(this));
+
+            return validity;
+        },
+
+        /**
+         * Set resumer class and opened property with the fieldset opened property
+         */
+        setResumerData: function() {
+            this.$.fldsResumer.opened = !this.opened;
+            this.$.fldsResumer.classList[(this.opened ? 'remove' : 'add')]('showed');
+        },
+
+        /**
+         * On core-collapse transition end
+         */
+        onCollapseTransitionEnd: function() {
+            if (!this.opened) this.setResumerData();
+        }
+    });
+</script>

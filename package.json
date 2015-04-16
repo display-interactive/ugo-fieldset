@@ -4,12 +4,12 @@
     },
     "description": "Polymer Element helper to resume form contents",
     "devDependencies": {
-        "web-component-tester": "~2.0.1"
+        "web-component-tester": "~2.*"
     },
-    "name": "core-resumer",
+    "name": "ugo-fieldset",
     "repository": {
         "type": "git",
         "url": "https://github.com/display-interactive/core-resumer.git"
     },
-    "version": "0.0.1"
+    "version": "0.2"
 }

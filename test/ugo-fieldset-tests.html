@@ -19,72 +19,55 @@
 <body>
 
 <form id="form">
-<ugo-fieldset id="typical" preventSubmission legend="Main">
-    <ugo-resumer id="rsm" showed class="ugo-fieldset-resume" attribute="{{attribute}}">
-        <core-collapse opened="{{opened}}" allowOverflow class="ugo-fieldset-content">
-            <div class="core-collapse-container">
-                <p><input type="hidden" name="hidden" resumer-item value="hidden" /></p>
-                <p><input type="text" name="text1" resumer-item pattern="text1" value="text" /></p>
-                <p><select name="select" resumer-item>
-                    <option value="select" selected="selected">select</option>
-                </select></p>
+<ugo-fieldset id="typical" prevent-submission legend="Main">
+    <p><input type="hidden" name="hidden" resumer-item value="hidden" /></p>
+    <p><input type="text" name="text1" resumer-item pattern="text1" value="text" /></p>
+    <p><select name="select" resumer-item>
+        <option value="select" selected="selected">select</option>
+    </select></p>
 
-
-                <p><input type="text" name="text2" resumer-item required="required" value="" /></p>
-                <p><select name="select2" resumer-item>
-                    <option value="select2" selected="selected">select2</option>
-                </select></p>
-            </div>
-        </core-collapse>
-    </ugo-resumer>
+    <p><input type="text" name="text2" resumer-item required="required" value="" /></p>
+    <p><select name="select2" resumer-item>
+        <option value="select2" selected="selected">select2</option>
+    </select></p>
 </ugo-fieldset>
 
-    <ugo-fieldset id="test2" preventSubmission legend="Main2">
-        <ugo-resumer id="rsm" showed class="ugo-fieldset-resume" attribute="{{attribute}}">
-            <core-collapse opened="{{opened}}" allowOverflow class="ugo-fieldset-content">
-                <div class="core-collapse-container">
-                     <input type="text" name="text3" resumer-item pattern="text" value="text" />
-                </div>
-            </core-collapse>
-        </ugo-resumer>
-    </ugo-fieldset>
+<ugo-fieldset id="test2" prevent-submission legend="Main2">
+     <input type="text" name="text3" resumer-item pattern="text" value="text" />
+</ugo-fieldset>
 </form>
 
 <script>
     suite('<ugo-fieldset>', function() {
-        var el = document.getElementById('typical'),
-            resume = el.querySelector('ugo-resumer'),
-            collapse = el.querySelector('core-collapse');
+        var el = document.getElementById('typical');
 
         test('exists', function() {
             assert.isNotNull(el);
         });
 
         test('it is opening when there is errors', function(done) {
-            assert.isTrue(resume.showed);
-            assert.isFalse(collapse.opened);
+            assert.isTrue(el.$.fldsResumer.opened);
+            assert.isFalse(el.$.fldsCollapse.opened);
             setTimeout(function() {
                 el.onFormSubmit({preventDefault: function() {}});
                 setTimeout(function() {
-                    assert.isFalse(resume.showed);
-                    assert.isTrue(collapse.opened);
+                    assert.isFalse(el.$.fldsResumer.opened);
+                    assert.isTrue(el.$.fldsCollapse.opened);
                     done();
                 }, 400);
             }, 100);
         });
 
-        var test2 = document.getElementById('test2'),
-            resume2 = test2.querySelector('ugo-resumer'),
-            collapse2 = test2.querySelector('core-collapse');
+        var test2 = document.getElementById('test2');
 
         test('it is not opening when there is no error', function(done) {
-            assert.isTrue(resume2.showed);
-            assert.isFalse(collapse2.opened);
+            assert.isTrue(test2.$.fldsResumer.opened);
+            assert.isFalse(test2.$.fldsCollapse.opened);
             setTimeout(function() {
                 test2.onFormSubmit({preventDefault: function() {}});
                 setTimeout(function() {
-                    assert.isTrue(resume2.showed);
-                    assert.isFalse(collapse2.opened);
+                    assert.isTrue(test2.$.fldsResumer.opened);
+                    assert.isFalse(test2.$.fldsCollapse.opened);
                     done();
                 }, 400);
             }, 100);
