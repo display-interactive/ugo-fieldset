@@ -6,7 +6,7 @@
     "devDependencies": {
         "web-component-tester": "~2.0.1"
     },
-    "name": "core-resumer",
+    "name": "ugo-fieldset",
     "repository": {
         "type": "git",
         "url": "https://github.com/display-interactive/core-resumer.git"
