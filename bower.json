@@ -16,7 +16,7 @@
     "keywords": ["Polymer", "web-components", "resume", "html", "form"],
     "dependencies": {
         "polymer": "Polymer/polymer#^0.5",
-        "ugo-resumer": "0.1",
+        "ugo-resumer": "https://github.com/display-interactive/ugo-resumer.git#0.1",
         "core-collapse": "Polymer/core-collapse"
     },
     "devDependencies": {
