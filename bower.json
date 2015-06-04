@@ -15,9 +15,9 @@
     ],
     "keywords": ["Polymer", "web-components", "resume", "html", "form"],
     "dependencies": {
-        "polymer": "Polymer/polymer#^0.8.0-rc.4",
+        "polymer": "Polymer/polymer#^1.0.*",
         "ugo-resumer": "*",
-        "core-collapse": "Polymer/core-collapse#0.8-preview"
+        "iron-collapse": "git@github.com:PolymerElements/iron-collapse.git#^1.0.*"
     },
     "devDependencies": {
         "web-component-tester": "*"

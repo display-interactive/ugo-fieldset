@@ -1,5 +1,5 @@
 <link rel="import" href="../polymer/polymer.html">
-<link rel="import" href="../core-collapse/core-collapse.html">
+<link rel="import" href="../iron-collapse/iron-collapse.html">
 <link rel="import" href="../ugo-resumer/ugo-resumer.html">
 
 <dom-module id="ugo-fieldset">
@@ -11,8 +11,9 @@
             margin: 30px 0 0;
         }
 
-        .ugo-fieldset-content .core-collapse-container {
+        .ugo-fieldset-content .iron-collapse-container {
             padding: 20px 30px;
+            margin: 0;
         }
 
         .ugo-fieldset-resume.showed {
@@ -25,7 +26,7 @@
     </style>
     <template>
 
-        <fieldset  class="ugo-fieldset">
+        <fieldset id="ugoFieldset" class="ugo-fieldset">
             <legend>
                 <button id="ugoFieldsetButton" type="button" class="ugo-fieldset-btn" on-tap="onTap">
                     <span aria-hidden="true">{{buttonText}}</span>
@@ -36,11 +37,11 @@
             <hr class="ugo-fieldset-border">
 
             <ugo-resumer id="fldsResumer" class="ugo-fieldset-resume">
-                <core-collapse id="fldsCollapse" opened="{{opened}}" allowOverflow class="ugo-fieldset-content">
-                    <div class="core-collapse-container">
+                <iron-collapse id="fldsCollapse" opened="{{opened}}" allowOverflow class="ugo-fieldset-content">
+                    <div class="iron-collapse-container">
                         <content></content>
                     </div>
-                </core-collapse>
+                </iron-collapse>
             </ugo-resumer>
         </fieldset>
     </template>
@@ -51,7 +52,7 @@
 
         properties: {
             /**
-             * Open status for core-collapse
+             * Open status for iron-collapse
              */
             opened: {
                 type: Boolean,
@@ -113,13 +114,6 @@
         },
 
         /**
-         * Remove listener when removing item
-         */
-        detached: function() {
-            this.collapse.removeEventListener('core-resize');
-        },
-
-        /**
          * onTap event switch opened
          */
         onTap: function() {
@@ -132,6 +126,7 @@
         openedChanged: function() {
             if (this.opened) this.setResumerData();
             this.buttonText = this.opened ? '-' : '+';
+            this.$.ugoFieldset.classList[this.opened ? 'add' : 'remove']('ugo-fieldset-open');
         },
 
         /**
@@ -206,7 +201,7 @@
         },
 
         /**
-         * On core-collapse transition end
+         * On iron-collapse transition end
          */
         onCollapseTransitionEnd: function() {
             if (!this.opened) this.setResumerData();
