@@ -32,6 +32,14 @@
 <ugo-fieldset id="test2" prevent-submission legend="Main2">
      <input type="text" name="text3" resumer-item pattern="text" value="text" />
 </ugo-fieldset>
+
+<ugo-fieldset id="test3" empty-value="pifpaf" prevent-submission legend="Main2">
+</ugo-fieldset>
+
+<ugo-fieldset id="test4" separator="[~]" attribute="resumer-item2" attribute-selector="[resumer-item2]" prevent-submission legend="Main2">
+    <input type="text" name="text3" resumer-item2  value="1" />
+    <input type="text" name="text3" resumer-item2  value="2" />
+</ugo-fieldset>
 </form>
 
 <script>
@@ -70,6 +78,19 @@
             }, 100);
         });
 
+        test('empty-value', function() {
+            var t3 = document.getElementById('test3');
+            var resumer = Polymer.dom(t3.root).querySelector('ugo-resumer');
+
+            assert.equal('pifpaf', resumer.resume);
+        })
+
+        test('attribute + selector + separator', function() {
+            var t4 = document.getElementById('test4');
+            var resumer = Polymer.dom(t4.root).querySelector('ugo-resumer');
+
+            assert.equal('1[~]2', resumer.resume);
+        })
     });
 </script>
 

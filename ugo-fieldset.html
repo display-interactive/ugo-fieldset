@@ -36,7 +36,7 @@
 
             <hr class="ugo-fieldset-border">
 
-            <ugo-resumer id="fldsResumer" class="ugo-fieldset-resume">
+            <ugo-resumer id="fldsResumer" separator="{{separator}}" empty-value="{{emptyValue}}" attribute="{{attribute}}" attribute-selector="{{attributeSelector}}" class="ugo-fieldset-resume">
                 <iron-collapse id="fldsCollapse" opened="{{opened}}" allowOverflow class="ugo-fieldset-content">
                     <div class="iron-collapse-container">
                         <content></content>
@@ -84,7 +84,39 @@
             legend: {
                 type: String,
                 notify: true
-            }
+            },
+
+            /**
+             * separator between values
+             */
+            separator: {
+                type: String,
+                value: ' - '
+            },
+
+            /**
+             * default value for the ugo-resumer
+             */
+            emptyValue: {
+                type: String,
+                value: ''
+            },
+
+            /**
+             * The selector to get get children
+             */
+            attributeSelector: {
+                type: String,
+                value: '[resumer-item]'
+            },
+
+            /**
+             * The attribute used to get children
+             */
+            attribute: {
+                type: String,
+                value: 'resumer-item'
+            },
         },
 
         /**
