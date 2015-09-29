@@ -16,7 +16,7 @@
 <body>
 
 <form id="form">
-<ugo-fieldset id="typical" prevent-submission legend="Main">
+<fieldset is="ugo-fieldset" id="typical" prevent-submission legend="Main">
     <p><input type="hidden" name="hidden" resumer-item value="hidden" /></p>
     <p><input type="text" name="text1" resumer-item pattern="text1" value="text" /></p>
     <p><select name="select" resumer-item>
@@ -27,19 +27,19 @@
     <p><select name="select2" resumer-item>
         <option value="select2" selected="selected">select2</option>
     </select></p>
-</ugo-fieldset>
+</fieldset>
 
-<ugo-fieldset id="test2" prevent-submission legend="Main2">
+<fieldset is="ugo-fieldset" id="test2" prevent-submission legend="Main2">
      <input type="text" name="text3" resumer-item pattern="text" value="text" />
-</ugo-fieldset>
+</fieldset>
 
-<ugo-fieldset id="test3" empty-value="pifpaf" prevent-submission legend="Main2">
-</ugo-fieldset>
+<fieldset is="ugo-fieldset" id="test3" empty-value="pifpaf" prevent-submission legend="Main2">
+</fieldset>
 
-<ugo-fieldset id="test4" separator="[~]" attribute="resumer-item2" attribute-selector="[resumer-item2]" prevent-submission legend="Main2">
+<fieldset is="ugo-fieldset" id="test4" separator="[~]" attribute="resumer-item2" attribute-selector="[resumer-item2]" prevent-submission legend="Main2">
     <input type="text" name="text3" resumer-item2  value="1" />
     <input type="text" name="text3" resumer-item2  value="2" />
-</ugo-fieldset>
+</fieldset>
 </form>
 
 <script>

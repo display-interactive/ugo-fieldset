@@ -6,7 +6,6 @@
     <meta charset="utf-8">
     <title>UGO Fieldset demo</title>
     <script src="../../webcomponentsjs/webcomponents-lite.min.js"></script>
-    <link rel="import" href="../../core-collapse/core-collapse.html">
     <link rel="import" href="../../ugo-resumer/ugo-resumer.html">
     <link rel="import" href="../ugo-fieldset.html">
     <style>
@@ -39,7 +38,7 @@
     <h1>Demo with ugo-resumer core-collapse</h1>
 
     <form novalidate>
-        <ugo-fieldset id="flds" prevent-submission opened legend="Paramètres principaux">
+        <fieldset is="ugo-fieldset" id="flds" prevent-submission opened legend="Paramètres principaux">
             <label>L3</label>
             <p><input type="hidden" name="hidden" resumer-item value="hidden" /></p>
             <p><input type="text" name="text1" resumer-item pattern="text1" value="text" /></p>
@@ -52,7 +51,7 @@
             <p><select name="select2" resumer-item>
                 <option value="select2" selected="selected">select2</option>
             </select></p>
-        </ugo-fieldset>
+        </fieldset>
 
         <button type="submit">send</button>
     </form>

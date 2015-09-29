@@ -19,7 +19,7 @@ hr.ugo-fieldset-border {
 }
 
 /** Fieldset **/
-.ugo-fieldset {
+:host {
     position:relative;
     min-width: 0;
     padding: 0;
@@ -27,13 +27,13 @@ hr.ugo-fieldset-border {
     border: 0;
 }
 
-.ugo-fieldset.ugo-fieldset-open {
+:host.ugo-fieldset-open {
     margin-bottom: 10px;
 }
 
 
 
-.ugo-fieldset > legend {
+:host > legend {
     position: absolute;
     top: 0;
     left: 0;
@@ -50,12 +50,12 @@ hr.ugo-fieldset-border {
     background-color: #fff;
 }
 
-.ugo-fieldset > legend > span {
+:host > legend > span {
     display: inline-block;
     margin: 0;
 }
 
-.ugo-fieldset > legend > span > span {
+:host > legend > span > span {
     text-transform: none;
 }
 
@@ -91,7 +91,7 @@ hr.ugo-fieldset-border {
     line-height: 1;
 }
 
-.ugo-fieldset ugo-resumer {
+:host ugo-resumer {
     margin: 0;
 }
 

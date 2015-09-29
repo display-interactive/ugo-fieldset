@@ -25,30 +25,28 @@
         }
     </style>
     <template>
+        <legend>
+            <button id="ugoFieldsetButton" type="button" class="ugo-fieldset-btn" on-tap="onTap">
+                <span aria-hidden="true">{{buttonText}}</span>
+            </button>
+            <span aria-label="true">{{legend}}</span>
+        </legend>
 
-        <fieldset id="ugoFieldset" class="ugo-fieldset">
-            <legend>
-                <button id="ugoFieldsetButton" type="button" class="ugo-fieldset-btn" on-tap="onTap">
-                    <span aria-hidden="true">{{buttonText}}</span>
-                </button>
-                <span aria-label="true">{{legend}}</span>
-            </legend>
+        <hr class="ugo-fieldset-border">
 
-            <hr class="ugo-fieldset-border">
-
-            <ugo-resumer id="fldsResumer" separator="{{separator}}" empty-value="{{emptyValue}}" attribute="{{attribute}}" attribute-selector="{{attributeSelector}}" class="ugo-fieldset-resume">
-                <iron-collapse id="fldsCollapse" opened="{{opened}}" allowOverflow class="ugo-fieldset-content">
-                    <div class="iron-collapse-container">
-                        <content></content>
-                    </div>
-                </iron-collapse>
-            </ugo-resumer>
-        </fieldset>
+        <ugo-resumer id="fldsResumer" separator="{{separator}}" empty-value="{{emptyValue}}" attribute="{{attribute}}" attribute-selector="{{attributeSelector}}" class="ugo-fieldset-resume">
+            <iron-collapse id="fldsCollapse" opened="{{opened}}" allowOverflow class="ugo-fieldset-content">
+                <div class="iron-collapse-container">
+                    <content id="ugo-fieldset-container"></content>
+                </div>
+            </iron-collapse>
+        </ugo-resumer>
     </template>
 </dom-module>
 <script>
     Polymer({
         is: 'ugo-fieldset',
+        extends: 'fieldset',
 
         properties: {
             /**
@@ -116,7 +114,7 @@
             attribute: {
                 type: String,
                 value: 'resumer-item'
-            },
+            }
         },
 
         /**
@@ -158,7 +156,7 @@
         openedChanged: function() {
             if (this.opened) this.setResumerData();
             this.buttonText = this.opened ? '-' : '+';
-            this.$.ugoFieldset.classList[this.opened ? 'add' : 'remove']('ugo-fieldset-open');
+            this.classList[this.opened ? 'add' : 'remove']('ugo-fieldset-open');
         },
 
         /**
@@ -200,11 +198,11 @@
          */
         isValid: function() {
             var validity = true,
-                parent,
-                elements = Polymer.dom(this).querySelectorAll('input, textarea, select')
+                errorFocus = false,
+                parent
             ;
 
-            [].forEach.call(elements, function(element) {
+            [].forEach.call(this.getFields(), function(element) {
                 if (element.getAttribute('parent-selector')) {
                     parent = this.querySelector(element.getAttribute('parent-selector'));
                 } else {
@@ -215,6 +213,9 @@
                     validity = false;
                     parent.classList.remove(this.successClass);
                     parent.classList.add(this.errorClass);
+                    if (false === errorFocus) { //put focus on the first error found
+                        element.focus();
+                    }
                 } else {
                     parent.classList.add(this.successClass);
                     parent.classList.remove(this.errorClass);
@@ -222,6 +223,13 @@
             }.bind(this));
 
             return validity;
+        },
+
+        /**
+         * Get fields in the fieldset
+         */
+        getFields: function() {
+            return Polymer.dom(this).querySelectorAll('input, textarea, select');
         },
 
         /**
