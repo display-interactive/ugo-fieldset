@@ -127,6 +127,12 @@
          */
         buttonText: null,
 
+
+        /**
+         * @type {HTMLElement|null}
+         */
+        elementToFocus: null,
+
         /**
          * Constructor
          */
@@ -198,9 +204,10 @@
          */
         isValid: function() {
             var validity = true,
-                errorFocus = false,
                 parent
             ;
+
+            this.elementToFocus = null;
 
             [].forEach.call(this.getFields(), function(element) {
                 if (element.getAttribute('parent-selector')) {
@@ -213,8 +220,8 @@
                     validity = false;
                     parent.classList.remove(this.successClass);
                     parent.classList.add(this.errorClass);
-                    if (false === errorFocus) { //put focus on the first error found
-                        element.focus();
+                    if (null === this.elementToFocus) { //put focus on the first error found
+                        this.elementToFocus = element;
                     }
                 } else {
                     parent.classList.add(this.successClass);
@@ -244,7 +251,12 @@
          * On iron-collapse transition end
          */
         onCollapseTransitionEnd: function() {
-            if (!this.opened) this.setResumerData();
+            if (!this.opened) {
+                this.setResumerData();
+            } else if (null !== this.elementToFocus) {
+                this.elementToFocus.focus();
+                this.elementToFocus = null;
+            }
         }
     });
 </script>
