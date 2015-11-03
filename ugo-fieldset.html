@@ -191,6 +191,9 @@
         onFormSubmit: function(event) {
             var isValid = this.isValid();
             if (!isValid) {
+                if (this.opened) {
+                    this._scrollIntoView();
+                }
                 this.opened = true;
             }
 
@@ -254,9 +257,25 @@
             if (!this.opened) {
                 this.setResumerData();
             } else if (null !== this.elementToFocus) {
-                this.elementToFocus.focus();
-                this.elementToFocus = null;
+                this._scrollIntoView();
             }
+        },
+
+
+        /**
+         * Scroll to element
+         * @private
+         */
+        _scrollIntoView: function() {
+            var element = this.elementToFocus;
+            if (element.offsetParent === null) {
+                element = element.parentNode;
+            }
+
+            element.scrollIntoView();
+            element.focus();
+
+            this.elementToFocus = null;
         }
     });
 </script>
