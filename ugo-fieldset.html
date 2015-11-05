@@ -11,9 +11,23 @@
             margin: 30px 0 0;
         }
 
+
+
+
         .ugo-fieldset-content .iron-collapse-container {
             padding: 20px 30px;
             margin: 0;
+            display: table;
+        }
+
+        .iron-collapse-container:before,
+        .iron-collapse-container:after {
+            content: " "; /* 1 */
+            display: table; /* 2 */
+        }
+
+        .iron-collapse-container:after {
+            clear: both;
         }
 
         .ugo-fieldset-resume.showed {
