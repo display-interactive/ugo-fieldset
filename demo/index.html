@@ -7,6 +7,7 @@
     <title>UGO Fieldset demo</title>
     <script src="../../webcomponentsjs/webcomponents-lite.min.js"></script>
     <link rel="import" href="../../ugo-resumer/ugo-resumer.html">
+    <link rel="import" href="../../ugo-collection/ugo-collection.html">
     <link rel="import" href="../ugo-fieldset.html">
     <style>
         body {
@@ -51,6 +52,23 @@
             <p><select name="select2" resumer-item>
                 <option value="select2" selected="selected">select2</option>
             </select></p>
+
+            <ugo-collection
+                    remove-text="pifpaf"
+                    class="ugo-theme"
+                    id="plop"
+                    selected="0"
+                    data-prototype="<div id=&quot;item___name__&quot; ugo-collection-item><ugo-resumer><h2>Item __name__</h2><input type=&quot;text&quot; id=&quot;text___name__&quot; required=&quot;required&quot; resumer-item value=&quot;&quot; /><br/><br/><input type=&quot;text&quot; /></ugo-resumer></div>">
+                <div id="item_0" ugo-collection-item>
+                    <ugo-resumer><h2>Item 0</h2><input type="text" id="text_0" required="required" resumer-item value="item demo longer 0"/><br/><br/><input type="text" /></ugo-resumer>
+                </div>
+                <div id="item_1" ugo-collection-item class="has-error">
+                    <ugo-resumer><h2>Item 1</h2><input type="text" id="text_1" required="required" resumer-item value="item 1"/><br/><br/><input type="text" /></ugo-resumer>
+                </div>
+                <div id="item_2" ugo-collection-item class="has-error">
+                    <ugo-resumer><h2>Item 2</h2><input type="text" id="text_2" required="required" resumer-item value="item demo even more longer 2"/><br/><br/><input type="text" /></ugo-resumer>
+                </div>
+            </ugo-collection>
         </fieldset>
 
         <button type="submit">send</button>

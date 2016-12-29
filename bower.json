@@ -5,7 +5,7 @@
         "Florian Roy"
     ],
     "description": "Polymer Element helper to resume form contents",
-    "main": "element/*",
+    "main": "ugo-fieldset.html",
     "ignore": [
         "**/.*",
         "node_modules",
@@ -16,7 +16,7 @@
     "keywords": ["Polymer", "web-components", "resume", "html", "form"],
     "dependencies": {
         "polymer": "Polymer/polymer#^1.2.*",
-        "ugo-resumer": "git@github.com:display-interactive/ugo-resumer.git",
+	"ugo-resumer": "git@github.com:display-interactive/ugo-resumer.git",
         "iron-collapse": "git@github.com:PolymerElements/iron-collapse.git#^1.0.*"
     },
     "devDependencies": {
